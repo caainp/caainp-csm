@@ -13,5 +13,10 @@ dependencies = [
 ]
 
 [tool.setuptools]
-packages = ["caainp_csm"]
-package-data = {caainp_csm = ["data/*.csv"]}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["caainp_csm*"]
+
+[tool.setuptools.package-data]
+caainp_csm = ["data/*.csv"]
