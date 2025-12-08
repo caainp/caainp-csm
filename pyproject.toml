@@ -14,3 +14,4 @@ dependencies = [
 
 [tool.setuptools]
 packages = ["caainp_csm"]
+package-data = {caainp_csm = ["data/*.csv"]}

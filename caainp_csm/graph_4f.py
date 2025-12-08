@@ -2,13 +2,22 @@
 import pandas as pd
 from typing import Dict, List, Set
 from pathlib import Path
+import importlib.resources
 
-_DEFAULT_CSV_PATH = Path(__file__).parent.parent / "ai_4f_node_map_fixed_embeded.csv"
+def _get_default_csv_path():
+    """패키지 내부의 CSV 파일 경로를 반환"""
+    try:
+        csv_path = importlib.resources.path("caainp_csm.data", "ai_4f_node_map_fixed_embeded.csv")
+        path = csv_path.__enter__()
+        return str(path)
+    except (AttributeError, ModuleNotFoundError, TypeError, ImportError):
+        # fallback
+        return str(Path(__file__).parent / "data" / "ai_4f_node_map_fixed_embeded.csv")
 
 class Graph4F:
     def __init__(self, csv_path: str = None):
         if csv_path is None:
-            csv_path = str(_DEFAULT_CSV_PATH)
+            csv_path = _get_default_csv_path()
         self.df = pd.read_csv(csv_path)
         # 4층만 사용
         self.df = self.df[self.df["floor"] == 4]
