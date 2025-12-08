@@ -1,6 +1,5 @@
 # test_plan.py
-from graph_4f import Graph4F
-from plan_csm import create_simple_plan, update_state_with_node
+from caainp_csm import Graph4F, create_simple_plan, update_state_with_node
 
 if __name__ == "__main__":
     g = Graph4F()

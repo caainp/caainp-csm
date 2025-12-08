@@ -1,7 +1,7 @@
 # plan_csm.py
 from typing import List, Dict, Any
 from dataclasses import dataclass, field
-from graph_4f import Graph4F
+from .graph_4f import Graph4F
 
 @dataclass
 class Constraints:

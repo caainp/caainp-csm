@@ -1,11 +1,14 @@
 # graph_4f.py
 import pandas as pd
 from typing import Dict, List, Set
+from pathlib import Path
 
-CSV_PATH = "ai_4f_node_map_fixed_embeded.csv"
+_DEFAULT_CSV_PATH = Path(__file__).parent.parent / "ai_4f_node_map_fixed_embeded.csv"
 
 class Graph4F:
-    def __init__(self, csv_path: str = CSV_PATH):
+    def __init__(self, csv_path: str = None):
+        if csv_path is None:
+            csv_path = str(_DEFAULT_CSV_PATH)
         self.df = pd.read_csv(csv_path)
         # 4층만 사용
         self.df = self.df[self.df["floor"] == 4]
