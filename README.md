@@ -175,7 +175,7 @@ python3 test_plan.py
 
 ## Related Projects
 
-- **CVM (Constraint-Aware Value Mapper)**: [Link to Repository]  
+- **CVM (Constraint-Aware Value Mapper)**: [Link to Repository](https://github.com/caainp/caainp-cvm/tree/main)
   The vision and value map calculation module.
 
 - **Map Data Specification**:  
