@@ -132,8 +132,10 @@ Data Interface Specification
 ```bash
 .
 ├── caainp_csm/                  # Main System Package (Core Logic)
-│   ├── manager/                 # Plan Generation & State Management
-│   └── utils/                   # Helper functions
+│   ├── data/                    # Data
+│   ├── __init__.py
+│   ├── graph_4f.py
+│   └── plan_csm.py
 ├── Qwen2.5-1.5B-Instruct/       # Fine-tuned LLM Directory
 │   ├── configs/                 # Training configurations
 │   ├── data/                    # Fine-tuning Datasets
