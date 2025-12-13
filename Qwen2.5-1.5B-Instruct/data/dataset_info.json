@@ -1,0 +1,10 @@
+{
+  "indoor_nav": {
+    "file_name": "indoor_nav.jsonl",
+    "columns": {
+      "prompt": "instruction",
+      "response": "output",
+      "history": "history"
+    }
+  }
+}

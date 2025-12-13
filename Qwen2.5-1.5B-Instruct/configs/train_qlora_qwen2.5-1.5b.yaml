@@ -1,0 +1,28 @@
+# --- 모델 설정 ---
+model_name_or_path: /root/workspace/Qwen2.5-1.5B-Instruct
+stage: sft
+do_train: true              # ← 이 줄 추가
+finetuning_type: lora
+template: qwen
+quantization_bit: 4
+lora_rank: 8                # 선택이지만 명시하는 걸 추천
+lora_target: all            # 전체 모듈에 LoRA 적용 (기본 예제와 동일)
+
+# --- 데이터셋 설정 ---
+dataset: indoor_nav
+dataset_dir: ./data
+cutoff_len: 512
+max_samples: 2000
+
+# --- 학습 하이퍼파라미터 ---
+output_dir: ./output/indoor_nav_qwen2.5-1.5b
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 4
+learning_rate: 1.0e-4
+num_train_epochs: 2.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.03
+logging_steps: 10
+save_steps: 200
+save_total_limit: 3
+fp16: true
