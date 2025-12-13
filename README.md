@@ -20,28 +20,6 @@ The primary goal of CSM is to generate a precise, constraint-aware multi-step **
 
 CSM orchestrates the entire navigation sequence, acting as the control tower between the user input and the vision-based positioning engine.
 
-```mermaid
-graph TD
-    User[User Input (Voice/Text)] -->|Natural Language| CSM
-
-    subgraph CSM [Constraint-Aware Sub-instruction Manager]
-        Parser[Command Parser]
-        Planner[Plan Generator]
-        StateMgr[Runtime State Machine]
-    end
-
-    subgraph CVM [Constraint-Aware Value Mapper]
-        Vision[Vision Positioning]
-        VMap[Value Map v2 Calculator]
-    end
-
-    Parser --> Planner
-    Planner -->|JSON Plan (Route Nodes)| StateMgr
-    StateMgr -->|Current Step & Trajectory| VMap
-    Vision -->|Current Node ID| StateMgr
-    StateMgr -->|Update Status| UI[AR / TTS Output]
-```
-
 ## Core Workflow
 
 1. **Multi-modal Input**
