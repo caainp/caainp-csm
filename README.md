@@ -167,25 +167,8 @@ pip install -r requirements.txt
 
 ### Usage Example
 
-```python
-from src.core.planner import CSM
-
-# 1. Initialize CSM with map data
-csm_system = CSM(map_path="data/map_nodes.csv")
-
-# 2. Process a User Command
-command = "I want to go to room 420 via room 410"
-plan = csm_system.generate_plan(command)
-
-# 3. Simulate Loop (Interaction with Vision System)
-# Assume CVM detects we are currently at node 4102
-current_vision_node = 4102
-
-# Update state based on vision feedback
-status_update = csm_system.update_state(current_vision_node)
-
-print(f"Current Status: {status_update['steps_status']}")
-# Output: {1: 'DONE', 2: 'IN_PROGRESS', 3: 'PENDING'}
+```bash
+python3 test_plan.py
 ```
 
 ## Related Projects
