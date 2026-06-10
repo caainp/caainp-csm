@@ -1,5 +1,5 @@
 # plan_csm.py
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from dataclasses import dataclass, field
 from .graph_4f import Graph4F
 
@@ -120,10 +120,36 @@ def create_simple_plan(text: str, g: Graph4F, start_room: int) -> PlanState:
         step_targets=step_targets,
     )
 
-def update_state_with_node(plan: PlanState, current_node: int, stay_frames: int = 5) -> None:
+def _int_or_none(value: Any) -> Optional[int]:
+    try:
+        return int(float(value))
+    except (TypeError, ValueError):
+        return None
+
+
+def _target_visible_for_step(
+    target_visibility: Optional[Dict[str, Any]],
+    targets: List[int],
+) -> bool:
+    if not target_visibility or not target_visibility.get("visible"):
+        return False
+    visible_target = _int_or_none(target_visibility.get("target_node"))
+    if visible_target is None:
+        return False
+    return visible_target in {int(target) for target in targets}
+
+
+def update_state_with_node(
+    plan: PlanState,
+    current_node: int,
+    stay_frames: int = 5,
+    arrival_state: Optional[str] = None,
+    target_visibility: Optional[Dict[str, Any]] = None,
+) -> None:
     """
     CVM에서 매 프레임 current_node를 넣어줄 때마다 호출된다고 가정.
     stay_frames: 목표 노드에 N프레임 연속으로 있으면 그 step을 완료.
+    arrival_state/target_visibility: 목적지가 시야에 들어온 말단 구간도 완료 후보로 처리.
     """
     cur_id = plan.current_step
     if cur_id not in plan.steps_status:
@@ -134,7 +160,11 @@ def update_state_with_node(plan: PlanState, current_node: int, stay_frames: int 
         return
 
     targets = plan.step_targets.get(cur_id, [])
-    if current_node in targets:
+    reached_target = current_node in targets or (
+        arrival_state == "IN_SIGHT"
+        and _target_visible_for_step(target_visibility, targets)
+    )
+    if reached_target:
         plan.in_target_count += 1
         if plan.in_target_count >= stay_frames:
             # step 완료
